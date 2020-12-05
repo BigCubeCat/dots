@@ -118,7 +118,10 @@ Plug 'plasticboy/vim-markdown'
 Plug 'easymotion/vim-easymotion'
 Plug 'mhinz/vim-startify'
 Plug 'OmniSharp/omnisharp-vim'
+Plug 'mboughaba/i3config.vim'
+Plug 'tomasiser/vim-code-dark'
 Plug 'Hovushka/vim-monokai-tasty'
+Plug 'dracula/vim',{'as':'dracula'}
 Plug 'jceb/vim-orgmode'
 Plug 'tmsvg/pear-tree'
 Plug 'tpope/vim-repeat'
@@ -176,9 +179,7 @@ command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 "AutoPairs
 let g:AutoPairsMultilineClose = 0
 
-"okai
-colorscheme gruvbox
-set bg=dark
+colorscheme dracula
 
 "Autoformat
 nnoremap <F4> :Autoformat<CR>
@@ -261,7 +262,6 @@ augroup hovagroup
         autocmd TermOpen * startinsert
     endif
     autocmd VimEnter * echom ">^.^< : config by Hova"
-    " autocmd FileType cpp,c source ~/.vim/syntax/vulkan.vim
 augroup END
 
 " Мой конфиг (не спизжен с гитхаба)
