@@ -1,32 +1,6 @@
-"Neovim Specific
-if has('nvim')
-    set runtimepath^=~/.vim runtimepath+=~/.vim/after
-    let &packpath = &runtimepath
-    language en_US
-    set noshowcmd
-    "Slime
-    let g:slime_target = "neovim"
-
-else
-    "Mac Specific
-
-    "Slime
-    let g:slime_target = "vimterminal"
-    let g:slime_python_ipython = 1
-    "GUI Specific
-    if has('gui_running')
-        set guioptions=
-        set guifont=Fura\ Code\ Light\ Nerd\ Font\ Complete:h16
-        set background=dark
-    else
-        "CLI Specific
-        " set ttimeoutlen=10
-        let &t_SI.="\e[5 q" "SI = INSERT mode
-        let &t_SR.="\e[3 q" "SR = REPLACE mode
-        let &t_EI.="\e[1 q" "EI = NORMAL mode
-    endif
-endif
-
+let &t_SI.="\e[5 q" "SI = INSERT mode
+let &t_SR.="\e[3 q" "SR = REPLACE mode
+let &t_EI.="\e[1 q" "EI = NORMAL mode
 "General
 filetype plugin indent on
 set nocompatible
@@ -95,18 +69,17 @@ Plug 'scrooloose/nerdtree'
 Plug 'jupyter-vim/jupyter-vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'tikhomirov/vim-glsl'
-Plug 'ErichDonGubler/vim-sublime-monokai'
 Plug 'itchyny/lightline.vim'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'elzr/vim-json'
+Plug 'lervag/vimtex'
 Plug 'vim-scripts/greplace.vim'
 Plug 'rking/ag.vim'
 Plug 'jpalardy/vim-slime'
 Plug 'shime/vim-livedown'
-Plug 'morhetz/gruvbox'
 Plug 'gko/vim-coloresque'
 Plug 'jesseleite/vim-noh'
 Plug 'skywind3000/asyncrun.vim'
@@ -117,9 +90,6 @@ Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'easymotion/vim-easymotion'
 Plug 'mhinz/vim-startify'
-Plug 'OmniSharp/omnisharp-vim'
-Plug 'mboughaba/i3config.vim'
-Plug 'tomasiser/vim-code-dark'
 Plug 'Hovushka/vim-monokai-tasty'
 Plug 'dracula/vim',{'as':'dracula'}
 Plug 'jceb/vim-orgmode'
@@ -128,8 +98,28 @@ Plug 'tpope/vim-repeat'
 Plug 'ajh17/VimCompletesMe'
 Plug 'dense-analysis/ale'
 Plug 'octol/vim-cpp-enhanced-highlight'
-" Plug 'lyokha/vim-xkbswitch'
+Plug 'farazdagi/vim-go-ide'
+Plug 'preservim/nerdcommenter'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'vim-syntastic/syntastic'
+" Themes
+Plug 'dracula/vim', {'as':'dracula'}
+" WEB
+Plug 'hail2u/vim-css3-syntax'
+
 call plug#end()
+
+" Syntatic 
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 "Pear Tree
 let g:pear_tree_repeatable_expand = 0
@@ -147,8 +137,6 @@ let g:ale_glsl_glslang_options = "-V -o shaders/.lint.spv"
 " let g:ale_cpp_clang_options = '-std=c++17 -Wall -Wno-unused-const-variable -Wno-unused-function'
 let g:ale_linters = {'cpp': ['']}
 
-"Omnisharp
-let g:OmniSharp_server_stdio = 1
 
 "COC-extensions
 let g:coc_global_extensions=[ 'coc-omnisharp', 'coc-python' , 'coc-ccls', 'coc-highlight' ]
@@ -165,10 +153,11 @@ let g:startify_custom_header = []
 let g:XkbSwitchEnabled = 1
 let g:XkbSwitchNLayout = 'us'
 
-"Ultisnips
+"Ultisnip
 let g:UltiSnipsExpandTrigger="<C-CR>"
 let g:UltiSnipsJumpForwardTrigger="<C-b>"
 let g:UltiSnipsJumpBackwardTrigger="<C-z>"
+
 
 "Easymotion
 map <Leader> <Plug>(easymotion-prefix)
@@ -232,12 +221,6 @@ inoremap <F8> <C-X><C-P>
 "Line completion
 inoremap <F9> <C-X><C-L>
 
-"Custom commands
-
-if has("nvim")
-    command! -nargs=0 GetTermId :echom b:terminal_job_id
-    command! -nargs=* Term :split term://<args> | :GetTermId
-endif
 
 "stoeffel/.dotfiles
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
@@ -261,13 +244,21 @@ augroup hovagroup
     if has('nvim')
         autocmd TermOpen * startinsert
     endif
-    autocmd VimEnter * echom ">^.^< : config by Hova"
+    autocmd VimEnter * echom ">^.^< : config by BigCubeCat"
 augroup END
 
-" Мой конфиг (не спизжен с гитхаба)
+
+
 set norelativenumber
 set termguicolors
 map <C-n> :NERDTreeToggle<CR>
 map <C-t> :term<CR>
 set laststatus=2
 set noshowmode
+let g:tex_flavor='latex'
+let g:vimtex_view_method='zathura'
+let g:vimtex_quickfix_mode=0
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_CompileRule_pdf = 'latexmk -pdf -f $*'
+set conceallevel=1
+let g:tex_conceal='abdmg'
