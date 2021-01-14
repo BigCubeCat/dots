@@ -8,8 +8,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 
 bindsym $mod+Shift+q kill
 
-bindsym $mod+d exec --no-startup-id "rofi -show window"
-bindsym $mod+Shift+d exec --no-startup-id "rofi -show drun"
+bindsym $mod+d exec --no-startup-id "rofi -show file-browser"
+bindsym $mod+Shift+d exec rofi -show drun
 
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -21,7 +21,7 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-bindsym $mod+h split h
+bindsym $mod+g split h
 
 bindsym $mod+v split v
 
@@ -29,7 +29,7 @@ bindsym $mod+f fullscreen toggle
 
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+l exec i3lock
+bindsym $mod+Shift+l exec i3lock
 bindsym $mod+e layout toggle split
 
 bindsym $mod+space floating toggle
@@ -45,7 +45,7 @@ set $workspace6 "6"
 set $workspace7 "7"
 set $workspace8 "8"
 set $workspace9 "9"
-set $workspace10 "0"
+set $workspace10 "10"
 
 bindsym $mod+1 workspace $workspace1
 bindsym $mod+2 workspace $workspace2
@@ -75,7 +75,8 @@ bindsym $mod+Shift+r restart
 
 mode "Exit: Mod + [(L)ogout, (R)eboot, (P)oweroff]" {
         bindsym $mod+Shift+r exec systemctl reboot
-        bindsym $mod+Shift+l exit && exit
+        bindsym $mod+Shift+l exit
+
         bindsym $mod+Shift+p exec systemctl poweroff
 
         bindsym Return mode "default"
@@ -124,7 +125,7 @@ bar {
   position top
 }
 
-gaps inner 5
+gaps inner 10
 
 set $mode_gaps Gaps: (o)uter, (i)nner, (h)orizontal, (v)ertical, (t)op, (r)ight, (b)ottom, (l)eft
 set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
@@ -265,4 +266,3 @@ exec_always --no-startup-id numlockx on
 exec_always --no-startup-id picom
 #exec --no-startup-id bash -u ~/.config/i3/i3status.sh
 exec ~/.fehbg
-

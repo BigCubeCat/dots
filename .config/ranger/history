@@ -1,0 +1,11 @@
+open_with vimd
+
+open_with vim
+open_with 
+rename model.go
+open_with unzip
+! unzip
+unzip
+open_with :q
+rename iiiii
+delete 
