@@ -4,12 +4,12 @@ font pango:font-awesome 10
 
 floating_modifier $mod
 
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec kitty
 
-bindsym $mod+Shift+q kill
+bindsym $mod+q kill
 
-bindsym $mod+d exec --no-startup-id "rofi -show file-browser"
-bindsym $mod+Shift+d exec rofi -show drun
+bindsym $mod+Shift+d exec rofi -show window   
+bindsym $mod+d exec rofi -show drun
 
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -22,19 +22,19 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 bindsym $mod+g split h
-
 bindsym $mod+v split v
+bindsym $mod+t split toggle
 
 bindsym $mod+f fullscreen toggle
+bindsym $mod+l exec "swaylock -i Pictures/1920x1080-dark-linux.png"
 
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+Shift+l exec i3lock
 bindsym $mod+e layout toggle split
 
 bindsym $mod+space floating toggle
 
-bindsym $mod+Shift+space focus mode_toggle
+bindsym $mod+Tab focus mode_toggle
 
 set $workspace1 "1"
 set $workspace2 "2"
@@ -76,7 +76,6 @@ bindsym $mod+Shift+r restart
 mode "Exit: Mod + [(L)ogout, (R)eboot, (P)oweroff]" {
         bindsym $mod+Shift+r exec systemctl reboot
         bindsym $mod+Shift+l exit
-
         bindsym $mod+Shift+p exec systemctl poweroff
 
         bindsym Return mode "default"
@@ -105,27 +104,12 @@ client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
 client.background       #F8F8F2
 
 # Borders
-default_border none
-hide_edge_borders both
+default_border pixel
 
+gaps inner 5
+gaps outer 5
 
-bar {
-  colors {
-    background #282A36
-    statusline #F8F8F2
-    separator  #44475A
-
-    focused_workspace  #44475A #44475A #F8F8F2
-    active_workspace   #282A36 #44475A #F8F8F2
-    inactive_workspace #282A36 #282A36 #BFBFBF
-    urgent_workspace   #FF5555 #FF5555 #F8F8F2
-    binding_mode       #FF5555 #FF5555 #F8F8F2
-  }
-  status_command i3status --config ~/.config/i3/i3status.conf
-  position top
-}
-
-gaps inner 10
+exec_always --no-startup-id waybar
 
 set $mode_gaps Gaps: (o)uter, (i)nner, (h)orizontal, (v)ertical, (t)op, (r)ight, (b)ottom, (l)eft
 set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
@@ -249,20 +233,29 @@ mode "$mode_gaps_left" {
 }
 
 bindsym $mod+b exec chromium
-bindsym $mod+F12 exec flameshot gui
 bindsym $mod+n exec ranger
-bindsym $mod+m bar mode toggle
 
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +1%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -1%
 bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec "brillo -A 10"
+bindsym XF86MonBrightnessDown exec "brillo -U 10"
 
 # Change lang:
-exec_always --no-startup-id setxkbmap "us,ru" "winkeys" "grp:alt_shift_toggle"
+input * {
+    xkb_layout us,ru
+    xkb_options grp:alt_shift_toggle
+}
  
 # Numlock on:
 exec_always --no-startup-id numlockx on
-# exec compton -f --vsync drm
+# compositor
 exec_always --no-startup-id picom
-#exec --no-startup-id bash -u ~/.config/i3/i3status.sh
-exec ~/.fehbg
+# wallpaper
+exec_always --no-startup-id "swaybg -i Pictures/back.jpg"
+exec export _JAVA_AWT_WM_NONREPARENTING=1
+exec wmname i3
+bindsym Print exec grim ~/Pictures/screen-"$(date +%s)".png
+bindsym $mod+Print exec grim -g "$(slurp)" ~/Pictures/screen-"$(date +%s)".png
+

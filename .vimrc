@@ -92,20 +92,23 @@ Plug 'easymotion/vim-easymotion'
 Plug 'mhinz/vim-startify'
 Plug 'Hovushka/vim-monokai-tasty'
 Plug 'dracula/vim',{'as':'dracula'}
+Plug 'doums/darcula'
 Plug 'jceb/vim-orgmode'
 Plug 'tmsvg/pear-tree'
 Plug 'tpope/vim-repeat'
 Plug 'ajh17/VimCompletesMe'
 Plug 'dense-analysis/ale'
 Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'vim-airline/vim-airline'
+Plug 'morhetz/gruvbox'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'flazz/vim-colorschemes'
+Plug 'doums/darcula'
 Plug 'farazdagi/vim-go-ide'
 Plug 'preservim/nerdcommenter'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-syntastic/syntastic'
-" Themes
-Plug 'dracula/vim', {'as':'dracula'}
-" WEB
 Plug 'hail2u/vim-css3-syntax'
 
 call plug#end()
@@ -169,6 +172,7 @@ command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 let g:AutoPairsMultilineClose = 0
 
 colorscheme dracula
+"set background=dark
 
 "Autoformat
 nnoremap <F4> :Autoformat<CR>
@@ -198,12 +202,9 @@ nnoremap <Space>u :PlugUpdate<CR>
 nnoremap <Space>m :LivedownToggle<CR>
 nnoremap <Space>j :call jupyter#Connect()<CR>
 
-nnoremap <Space>e :e ~/.config/nvim/init.vim<CR>
-nnoremap <Space>w :source ~/.config/nvim/init.vim<CR>
-            \:echom "~/.vimrc is sourced"<CR>
-
 nnoremap <Space>o :copen<CR>
 nnoremap <Space>l :lopen<CR>
+nnoremap <Space>w :SyntasticToggleMode<CR>
 
 "Function bindings
 nnoremap <silent> <F2> :NERDTreeToggle<CR>
@@ -222,28 +223,15 @@ inoremap <F8> <C-X><C-P>
 inoremap <F9> <C-X><C-L>
 
 
-"stoeffel/.dotfiles
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-
 function! ExecuteMacroOverVisualRange()
   echo "@".getcmdline()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
 
-command! -nargs=* Blender :!/Applications/Blender/blender.app/Contents/MacOS/blender
-            \ <args>
-command! -nargs=? Blend :!/Applications/Blender/blender.app/Contents/MacOS/blender
-            \ -b -P % -- <args>
-command! -nargs=? Blendo :!/Applications/Blender/blender.app/Contents/MacOS/blender
-            \ -P % -- <args>
-
 "Auto commands
 augroup hovagroup
     autocmd!
     " autocmd! BufWritePost,BufEnter * Neomake
-    if has('nvim')
-        autocmd TermOpen * startinsert
-    endif
     autocmd VimEnter * echom ">^.^< : config by BigCubeCat"
 augroup END
 
@@ -262,3 +250,9 @@ let g:Tex_DefaultTargetFormat = 'pdf'
 let g:Tex_CompileRule_pdf = 'latexmk -pdf -f $*'
 set conceallevel=1
 let g:tex_conceal='abdmg'
+
+let g:airline_powerline_fonts = 1 "Включить поддержку Powerline шрифтов
+let g:airline#extensions#keymap#enabled = 0 "Не показывать текущий маппинг
+let g:airline_section_z = "\ue0a1:%l/%L Col:%c" "Кастомная графа положения курсора
+let g:Powerline_symbols='unicode' "Поддержка unicode
+let g:airline#extensions#xkblayout#enabled = 0 "Про это позже расскажу

@@ -1,6 +1,4 @@
 open_with vimd
-
-open_with vim
 open_with 
 rename model.go
 open_with unzip
@@ -8,4 +6,20 @@ open_with unzip
 unzip
 open_with :q
 rename iiiii
+touch window.rasi
+touch input.life
+rename data.sqlite
+open_with vim
+rename data.db
+cp
+rename sway
+copy
+wq
+delete
+search way
+Dele
+
+q
 delete 
+copy 
+paste
